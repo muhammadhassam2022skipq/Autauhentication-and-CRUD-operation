@@ -51,9 +51,10 @@ app.use(deleteProductRoute);
 app.use (accountRoute);
 
 app.use((req, res,next) => {
+  const isAuthenticated = req.session.isLoggedIn ? req.session.isLoggedIn : false;
     res.render("error", {
         pageTitle: "Error Page Not Found",
-        next
+        isAuthenticated: isAuthenticated
     })
 });
 

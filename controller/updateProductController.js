@@ -2,8 +2,10 @@
 const productModel = require("../model/addProductListModel");
 const mongoose = require ("mongoose");
 exports.getUpdate=((req,res)=> {
+    const isAuthenticated = req.session.isLoggedIn ? req.session.isLoggedIn : false;
     res.render("update", {
-        pageTitle: "Product Update"
+        pageTitle: "Product Update",
+        isAuthenticated: isAuthenticated
     })
 });
 

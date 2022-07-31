@@ -10,6 +10,10 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
                 <a class="nav-link" href="/addproducts">Add Products</a>
                 <a class="nav-link" href="/listproducts">List Products</a>
+                <% if(!isAuthenticated && isAuthenticated === false) { %>
+                <a class="nav-link" href="/signup">Sign Up</a>
+                <a class="nav-link" href="/signin">Sign In</a>
+               <% } %>
             </div>
         </div>
     </div>

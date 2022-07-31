@@ -2,8 +2,10 @@
 const productModel = require("../model/addProductListModel");
 const mongoose = require ("mongoose");
 exports.get=((req,res)=> {
+    const isAuthenticated = req.session.isLoggedIn ? req.session.isLoggedIn : false;
     res.render("delete", {
-        pageTitle: "Delete Products"
+        pageTitle: "Delete Products",
+        isAuthenticated: isAuthenticated
     })
 });
 exports.postDelete = ((req,res)=> {
