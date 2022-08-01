@@ -11,6 +11,19 @@
         <div class="container">
             <div class="row">
               <div class="col-md-6 mx-auto">
+                <% if((validationErrors?.length ?? 0) > 0) { %>
+                  <div class="row">
+                    <p>
+                      <ul>
+                          <% for(let error of validationErrors) { %>
+                              <li>
+                                <%= error.msg %>
+                              </li>
+                          <% } %>
+                      </ul>
+                    </p>
+                  </div>
+                  <% } %>
                 <form action="/signup" method="post" class="form-signin">
                   <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
                   <label for="firstName" class="sr-only">First name</label>

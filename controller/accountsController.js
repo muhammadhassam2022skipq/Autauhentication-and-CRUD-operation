@@ -2,17 +2,22 @@ const express = require ("express");
 const mongoose = require ("mongoose");
 const signUPModel = require("../model/signUPModel");
 const bcrypt = require("bcrypt");
+const {validationResult} = require('express-validator/check');
 // sign up
 
 exports.getSignUP = ((req,res)=> {
     const isAuthenticated = req.session.isLoggedIn ? req.session.isLoggedIn : false;
     res.render("signup", {
         pageTitle: "Sign Up",
-        isAuthenticated: isAuthenticated
+        isAuthenticated: isAuthenticated,
+        validationErrors: []
     })
 })
 
 exports.postSignUP = ((req,res)=> {
+    const errors = validationResult(req);
+    const isAuthenticated = req.session.isLoggedIn ? req.session.isLoggedIn : false;
+    if(errors.isEmpty()) {
     bcrypt.hash(req.body.password, 10).then ((hash)=>{
         const signUP = new signUPModel ({
             _id: mongoose.Types.ObjectId(),
@@ -20,7 +25,6 @@ exports.postSignUP = ((req,res)=> {
             lastName: req.body.lastName,
             email: req.body.email,
              password: hash
-    
         })
         signUP.save().then((signedUPUer)=>{
             console.log ("successfuly saved"+signedUPUer)
@@ -29,7 +33,17 @@ exports.postSignUP = ((req,res)=> {
         });
     }).catch((err)=> {
         console.log ("The hash error is: "+ err);
-    });
+    })
+} else {
+    res.render('signup', {
+        path:'/signup',
+        pageTitle: 'Sign Up',
+        errors: errors,
+        validationErrors: errors.array(),
+        isAuthenticated: isAuthenticated
+    })
+
+}
     
 })
 
